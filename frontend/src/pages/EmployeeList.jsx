@@ -13,6 +13,7 @@ const EmployeeList = () => {
     const [statusFilter, setStatusFilter] = useState('All');
     const [salaryFilter, setSalaryFilter] = useState('All');
     const [departmentFilter, setDepartmentFilter] = useState('All');
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         fetchEmployees();
@@ -59,7 +60,14 @@ const EmployeeList = () => {
             // Department Match (Additional Feature)
             const matchesDepartment = departmentFilter === 'All' || emp.department === departmentFilter;
 
-            return matchesStatus && matchesSalary && matchesDepartment;
+            // Search Match
+            const searchLower = searchQuery.toLowerCase();
+            const matchesSearch = !searchQuery ||
+                (emp.name && emp.name.toLowerCase().includes(searchLower)) ||
+                (emp.designation && emp.designation.toLowerCase().includes(searchLower)) ||
+                (emp.department && emp.department.toLowerCase().includes(searchLower));
+
+            return matchesStatus && matchesSalary && matchesDepartment && matchesSearch;
         });
 
     return (
@@ -72,8 +80,18 @@ const EmployeeList = () => {
                 </Link>
             </div>
 
-            {/* Controls Bar for Filtering (Horizontal Layout) */}
-            <div className="bg-base-100 p-3 rounded-lg shadow-sm mb-6 flex flex-row gap-4 items-center justify-between border border-base-300">
+            {/* Controls Bar for Filtering & Search */}
+            <div className="bg-base-100 p-3 rounded-lg shadow-sm mb-6 flex flex-col gap-4 border border-base-300">
+                {/* Search Bar */}
+                <div className="w-full">
+                    <input
+                        type="text"
+                        placeholder="Search employees by name, designation, or department..."
+                        className="input input-bordered input-sm w-full"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                </div>
                 <div className="flex flex-row w-full gap-4">
                     {/* Status Tracking Dropdown */}
                     <div className="flex-1">
