@@ -82,66 +82,66 @@ const EmployeeList = () => {
             </div>
 
             {/* Controls Bar for Filtering & Search */}
-            <div className="bg-base-100 p-3 rounded-lg shadow-sm mb-6 flex flex-col gap-4 border border-base-300">
+            <div className="bg-base-100 p-3 rounded-lg shadow-sm mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 border border-base-300">
                 {/* Search Bar */}
                 <div className="w-full">
+                    <label className="label text-xs py-1">Search</label>
                     <label className="input input-bordered input-sm flex items-center gap-2 w-full">
                         <FiSearch className="text-base-content/50" />
                         <input
                             type="text"
                             className="grow"
-                            placeholder="Search employees by name, designation, or department..."
+                            placeholder="Name, role, dept..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </label>
                 </div>
-                <div className="flex flex-row w-full gap-4">
-                    {/* Status Tracking Dropdown */}
-                    <div className="flex-1">
-                        <label className="label text-xs py-1">Status</label>
-                        <select
-                            className="select select-bordered select-sm w-full"
-                            value={statusFilter}
-                            onChange={(e) => setStatusFilter(e.target.value)}
-                        >
-                            <option value="All">All Statuses</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                            <option value="Resigned">Resigned</option>
-                        </select>
-                    </div>
 
-                    {/* Salary Categorization Dropdown */}
-                    <div className="flex-1">
-                        <label className="label text-xs py-1">Salary</label>
-                        <select
-                            className="select select-bordered select-sm w-full"
-                            value={salaryFilter}
-                            onChange={(e) => setSalaryFilter(e.target.value)}
-                        >
-                            <option value="All">All Salaries</option>
-                            <option value="Under 50k">Under $50k</option>
-                            <option value="50k - 100k">$50k - $100k</option>
-                            <option value="Over 100k">Over $100k</option>
-                        </select>
-                    </div>
+                {/* Status Tracking Dropdown */}
+                <div className="w-full">
+                    <label className="label text-xs py-1">Status</label>
+                    <select
+                        className="select select-bordered select-sm w-full"
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                    >
+                        <option value="All">All Statuses</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="Resigned">Resigned</option>
+                    </select>
+                </div>
 
-                    {/* Department Dropdown */}
-                    <div className="flex-1">
-                        <label className="label text-xs py-1">Department</label>
-                        <select
-                            className="select select-bordered select-sm w-full"
-                            value={departmentFilter}
-                            onChange={(e) => setDepartmentFilter(e.target.value)}
-                        >
-                            <option value="All">All Departments</option>
-                            <option value="IT">IT</option>
-                            <option value="HR">HR</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Marketing">Marketing</option>
-                        </select>
-                    </div>
+                {/* Salary Categorization Dropdown */}
+                <div className="w-full">
+                    <label className="label text-xs py-1">Salary</label>
+                    <select
+                        className="select select-bordered select-sm w-full"
+                        value={salaryFilter}
+                        onChange={(e) => setSalaryFilter(e.target.value)}
+                    >
+                        <option value="All">All Salaries</option>
+                        <option value="Under 50k">Under $50k</option>
+                        <option value="50k - 100k">$50k - $100k</option>
+                        <option value="Over 100k">Over $100k</option>
+                    </select>
+                </div>
+
+                {/* Department Dropdown */}
+                <div className="w-full">
+                    <label className="label text-xs py-1">Department</label>
+                    <select
+                        className="select select-bordered select-sm w-full"
+                        value={departmentFilter}
+                        onChange={(e) => setDepartmentFilter(e.target.value)}
+                    >
+                        <option value="All">All Departments</option>
+                        <option value="IT">IT</option>
+                        <option value="HR">HR</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Marketing">Marketing</option>
+                    </select>
                 </div>
             </div>
 
