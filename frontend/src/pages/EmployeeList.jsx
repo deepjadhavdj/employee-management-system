@@ -88,11 +88,11 @@ const EmployeeList = () => {
                 {/* Search Bar */}
                 <div className="w-full">
                     <label className="label text-xs py-1">Search</label>
-                    <label className="input input-bordered input-sm flex items-center gap-2 w-full bg-gray-800 text-white border-gray-700">
+                    <label className="input input-bordered input-sm flex items-center gap-2 w-full bg-white text-neutral border-base-300">
                         <FiSearch className="text-red-500 text-lg" />
                         <input
                             type="text"
-                            className="grow placeholder-gray-400 bg-transparent text-white"
+                            className="grow placeholder-neutral/50 bg-transparent text-neutral"
                             placeholder="Name, ID, role, dept..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
