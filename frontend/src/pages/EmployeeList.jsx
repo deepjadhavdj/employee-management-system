@@ -66,7 +66,9 @@ const EmployeeList = () => {
             const matchesSearch = !searchQuery ||
                 (emp.name && emp.name.toLowerCase().includes(searchLower)) ||
                 (emp.designation && emp.designation.toLowerCase().includes(searchLower)) ||
-                (emp.department && emp.department.toLowerCase().includes(searchLower));
+                (emp.department && emp.department.toLowerCase().includes(searchLower)) ||
+                (emp.employeeId && emp.employeeId.toLowerCase().includes(searchLower)) ||
+                (emp._id && emp._id.toLowerCase().includes(searchLower));
 
             return matchesStatus && matchesSalary && matchesDepartment && matchesSearch;
         });
@@ -91,7 +93,7 @@ const EmployeeList = () => {
                         <input
                             type="text"
                             className="grow placeholder-gray-400 bg-transparent text-white"
-                            placeholder="Name, role, dept..."
+                            placeholder="Name, ID, role, dept..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
