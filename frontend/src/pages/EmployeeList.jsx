@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import axios from '../lib/axios';
 import EmployeeCard from '../components/EmployeeCard';
 import EmployeeNotFound from '../components/EmployeeNotFound';
+import { FiSearch } from 'react-icons/fi';
 
 const EmployeeList = () => {
     const [employees, setEmployees] = useState([]);
@@ -84,13 +85,16 @@ const EmployeeList = () => {
             <div className="bg-base-100 p-3 rounded-lg shadow-sm mb-6 flex flex-col gap-4 border border-base-300">
                 {/* Search Bar */}
                 <div className="w-full">
-                    <input
-                        type="text"
-                        placeholder="Search employees by name, designation, or department..."
-                        className="input input-bordered input-sm w-full"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
+                    <label className="input input-bordered input-sm flex items-center gap-2 w-full">
+                        <FiSearch className="text-base-content/50" />
+                        <input
+                            type="text"
+                            className="grow"
+                            placeholder="Search employees by name, designation, or department..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </label>
                 </div>
                 <div className="flex flex-row w-full gap-4">
                     {/* Status Tracking Dropdown */}
