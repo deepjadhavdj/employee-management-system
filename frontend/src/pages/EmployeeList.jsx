@@ -9,10 +9,11 @@ import { FiSearch } from 'react-icons/fi';
 const EmployeeList = () => {
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingMessage, setLoadingMessage] = useState('Loading...');
 
     // Filter states
     const [statusFilter, setStatusFilter] = useState('All');
-    const [salaryFilter, setSalaryFilter] = useState('All');
+    const [salaryFilter, setSalaryFilter] = useState('');
     const [departmentFilter, setDepartmentFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -25,10 +26,12 @@ const EmployeeList = () => {
             const response = await axios.get('/employees');
             setEmployees(response.data);
             setLoading(false);
+            setLoadingMessage(null); // Clear message on success
         } catch (error) {
             console.error('Error fetching employees:', error);
             toast.error('Failed to fetch employees');
             setLoading(false);
+            setLoadingMessage(null); // Clear message on error
         }
     };
 
@@ -44,7 +47,24 @@ const EmployeeList = () => {
         }
     };
 
-    if (loading) return <div className="text-center mt-10">Loading...</div>;
+    useEffect(() => {
+        let timeout;
+        if (loading) {
+            timeout = setTimeout(() => {
+                setLoadingMessage("Waking up the server... This can take up to 50 seconds on Render's free tier. Please wait!");
+            }, 5000);
+        }
+        return () => clearTimeout(timeout);
+    }, [loading]);
+
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center mt-20">
+            <span className="loading loading-spinner loading-lg text-primary mb-4"></span>
+            <div className="text-lg font-medium text-center px-4">
+                {loadingMessage}
+            </div>
+        </div>
+    );
 
     // Filter Logic
     const filteredEmployees = employees
@@ -54,9 +74,9 @@ const EmployeeList = () => {
 
             // Salary Match (Compulsory Feature)
             let matchesSalary = true;
-            if (salaryFilter === 'Under 50k') matchesSalary = emp.salary < 50000;
-            if (salaryFilter === '50k - 100k') matchesSalary = emp.salary >= 50000 && emp.salary <= 100000;
-            if (salaryFilter === 'Over 100k') matchesSalary = emp.salary > 100000;
+            if (salaryFilter) {
+                matchesSalary = emp.salary && emp.salary.toString().includes(salaryFilter);
+            }
 
             // Department Match (Additional Feature)
             const matchesDepartment = departmentFilter === 'All' || emp.department === departmentFilter;
@@ -115,19 +135,16 @@ const EmployeeList = () => {
                     </select>
                 </div>
 
-                {/* Salary Categorization Dropdown */}
+                {/* Manual Salary Filter Input */}
                 <div className="w-full">
                     <label className="label text-xs py-1">Salary</label>
-                    <select
-                        className="select select-bordered select-sm w-full"
+                    <input
+                        type="number"
+                        className="input input-bordered input-sm w-full"
+                        placeholder="Enter salary..."
                         value={salaryFilter}
                         onChange={(e) => setSalaryFilter(e.target.value)}
-                    >
-                        <option value="All">All Salaries</option>
-                        <option value="Under 50k">Under $50k</option>
-                        <option value="50k - 100k">$50k - $100k</option>
-                        <option value="Over 100k">Over $100k</option>
-                    </select>
+                    />
                 </div>
 
                 {/* Department Dropdown */}
